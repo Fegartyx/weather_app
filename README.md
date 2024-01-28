@@ -1,16 +1,17 @@
-# weather_app
+# Weather App
 
-A new Flutter project.
+Weather Application with riverpod and dio 
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Second Time using Riverpod it's challenging but it's fun
 
-A few resources to get you started if this is your first Flutter project:
+## Content
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [x] Riverpod
+- [x] Dio
+- [x] API
+- [x] Animation Page
+- [x] User Location
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Preview Project
