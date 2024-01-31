@@ -1,12 +1,10 @@
 ## TODO
 
-- [] Set Database/Local Storage for saving location]
-- [] Make Saved Location Can Be Deleted
+- [] Check Connectivity
 
 ### Progress
 
-- [] Set Riverpod for Country API
-- [] Make in Country to get Data API
+- [] Save data from search view to saved_location_page
 
 ## Completed
 
@@ -16,3 +14,6 @@
 - [x] Set Up Riverpod
 - [x] Set Network API
 - [x] View for search location
+- [x] Set Riverpod for Country API
+- [x] Make in Country to get Data API
+- [x] Make a Search Location

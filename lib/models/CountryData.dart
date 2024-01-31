@@ -2,6 +2,7 @@
 //
 //     final countryData = countryDataFromJson(jsonString);
 
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
 CountryData countryDataFromJson(String str) =>
@@ -10,53 +11,160 @@ CountryData countryDataFromJson(String str) =>
 String countryDataToJson(CountryData data) => json.encode(data.toJson());
 
 class CountryData {
-  final bool error;
-  final String msg;
-  final List<Country> data;
+  final List<Data> data;
+  final Metadata metadata;
 
   CountryData({
-    required this.error,
-    required this.msg,
     required this.data,
+    required this.metadata,
   });
 
+  CountryData copyWith({
+    List<Data>? data,
+    Metadata? metadata,
+  }) =>
+      CountryData(
+        data: data ?? this.data,
+        metadata: metadata ?? this.metadata,
+      );
+
   factory CountryData.fromJson(Map<String, dynamic> json) => CountryData(
-        error: json["error"],
-        msg: json["msg"],
-        data: List<Country>.from(json["data"].map((x) => Country.fromJson(x))),
+        data: List<Data>.from(json["data"].map((x) => Data.fromJson(x))),
+        metadata: Metadata.fromJson(json["metadata"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "error": error,
-        "msg": msg,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "metadata": metadata.toJson(),
       };
 }
 
-class Country {
-  final String iso2;
-  final String iso3;
+class Data {
+  final int id;
+  final String wikiDataId;
+  final String type;
+  final String name;
   final String country;
-  final List<String> cities;
+  final String countryCode;
+  final String region;
+  final String regionCode;
+  final String regionWdId;
+  final double latitude;
+  final double longitude;
+  final int population;
+  final dynamic distance;
+  final String placeType;
 
-  Country({
-    required this.iso2,
-    required this.iso3,
+  Data({
+    required this.id,
+    required this.wikiDataId,
+    required this.type,
+    required this.name,
     required this.country,
-    required this.cities,
+    required this.countryCode,
+    required this.region,
+    required this.regionCode,
+    required this.regionWdId,
+    required this.latitude,
+    required this.longitude,
+    required this.population,
+    required this.distance,
+    required this.placeType,
   });
 
-  factory Country.fromJson(Map<String, dynamic> json) => Country(
-        iso2: json["iso2"],
-        iso3: json["iso3"],
+  Data copyWith({
+    int? id,
+    String? wikiDataId,
+    String? type,
+    String? name,
+    String? country,
+    String? countryCode,
+    String? region,
+    String? regionCode,
+    String? regionWdId,
+    double? latitude,
+    double? longitude,
+    int? population,
+    dynamic distance,
+    String? placeType,
+  }) =>
+      Data(
+        id: id ?? this.id,
+        wikiDataId: wikiDataId ?? this.wikiDataId,
+        type: type ?? this.type,
+        name: name ?? this.name,
+        country: country ?? this.country,
+        countryCode: countryCode ?? this.countryCode,
+        region: region ?? this.region,
+        regionCode: regionCode ?? this.regionCode,
+        regionWdId: regionWdId ?? this.regionWdId,
+        latitude: latitude ?? this.latitude,
+        longitude: longitude ?? this.longitude,
+        population: population ?? this.population,
+        distance: distance ?? this.distance,
+        placeType: placeType ?? this.placeType,
+      );
+
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        id: json["id"],
+        wikiDataId: json["wikiDataId"],
+        type: json["type"],
+        name: json["name"],
         country: json["country"],
-        cities: List<String>.from(json["cities"].map((x) => x)),
+        countryCode: json["countryCode"],
+        region: json["region"],
+        regionCode: json["regionCode"],
+        regionWdId: json["regionWdId"],
+        latitude: json["latitude"]?.toDouble(),
+        longitude: json["longitude"]?.toDouble(),
+        population: json["population"],
+        distance: json["distance"],
+        placeType: json["placeType"],
       );
 
   Map<String, dynamic> toJson() => {
-        "iso2": iso2,
-        "iso3": iso3,
+        "id": id,
+        "wikiDataId": wikiDataId,
+        "type": type,
+        "name": name,
         "country": country,
-        "cities": List<dynamic>.from(cities.map((x) => x)),
+        "countryCode": countryCode,
+        "region": region,
+        "regionCode": regionCode,
+        "regionWdId": regionWdId,
+        "latitude": latitude,
+        "longitude": longitude,
+        "population": population,
+        "distance": distance,
+        "placeType": placeType,
+      };
+}
+
+class Metadata {
+  final int currentOffset;
+  final int totalCount;
+
+  Metadata({
+    required this.currentOffset,
+    required this.totalCount,
+  });
+
+  Metadata copyWith({
+    int? currentOffset,
+    int? totalCount,
+  }) =>
+      Metadata(
+        currentOffset: currentOffset ?? this.currentOffset,
+        totalCount: totalCount ?? this.totalCount,
+      );
+
+  factory Metadata.fromJson(Map<String, dynamic> json) => Metadata(
+        currentOffset: json["currentOffset"],
+        totalCount: json["totalCount"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "currentOffset": currentOffset,
+        "totalCount": totalCount,
       };
 }

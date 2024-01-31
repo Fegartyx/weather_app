@@ -19,22 +19,23 @@ class WeatherServices {
       return Weather.fromJson(response.data);
     } on DioException catch (e) {
       debugPrint("$e");
-      rethrow;
+      throw e.error!;
     } catch (e) {
       debugPrint(e.toString());
       rethrow;
     }
   }
 
-  Future getDataForecastCity(String city) async {
+  Future getDataForecastCity({required String city}) async {
     try {
-      final response = await dio.get('?key=$API&q=medan&days=3');
+      final response = await dio.get('?key=$API&q=$city&days=3');
       return Weather.fromJson(response.data);
     } on DioException catch (e) {
       if (e.response != null) {
         // Tangani kesalahan respons dari server
         debugPrint("Error response data: ${e.response!.data}");
       }
+      rethrow;
     } catch (e) {
       rethrow;
     }

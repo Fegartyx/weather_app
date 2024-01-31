@@ -57,6 +57,7 @@ final FutureProvider<LocationData> locationProvider =
     FutureProvider((ref) async {
   final location = ref.watch(callLocation);
   await location.getUserLocation();
+  debugPrint("Location: ${location.currentLocation}");
   return location.currentLocation;
 });
 
@@ -75,17 +76,11 @@ final FutureProvider<LocationData> locationProvider =
 //   );
 // });
 
-final FutureProvider<CountryData> countryProvider =
-    FutureProvider<CountryData>((ref) async {
-  final country = ref.watch(callCountry);
-  return await country.getData();
-});
-
-class AsyncWeatherProvider extends AutoDisposeAsyncNotifier<List<Weather>> {
+class AsyncWeatherProvider extends AutoDisposeAsyncNotifier<Weather> {
   AsyncWeatherProvider() : super();
 
   @override
-  Future<List<Weather>> build() async {
+  Future<Weather> build() async {
     final location = ref.watch(locationProvider);
     // Menggunakan await untuk mendapatkan nilai dari location secara synchronous
     final locationData = location.whenOrNull(data: (value) => value);
@@ -99,20 +94,24 @@ class AsyncWeatherProvider extends AutoDisposeAsyncNotifier<List<Weather>> {
       // Handle ketika data location belum tersedia
       throw Exception('Location data is not available');
     }
+    // return await getWeather(
+    //   25.55,
+    //   25.55,
+    // );
   }
 
-  Future<List<Weather>> getWeather(double lat, long) async {
+  Future<Weather> getWeather(double lat, long) async {
     final weather = ref.watch(callData);
     final data = await weather.getDataForecastLatLong(
       lat,
       long,
     );
-    debugPrint(data.toString());
-    return [data];
+    debugPrint("Data: $data");
+    return data;
   }
 }
 
 final weatherProvider =
-    AsyncNotifierProvider.autoDispose<AsyncWeatherProvider, List<Weather>>(() {
+    AsyncNotifierProvider.autoDispose<AsyncWeatherProvider, Weather>(() {
   return AsyncWeatherProvider();
 });
