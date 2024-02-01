@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/models/CountryData.dart';
 import 'package:weather_app/services/CountryServices.dart';
@@ -9,7 +8,6 @@ class SearchCountryProviders extends AutoDisposeNotifier<String> {
   SearchCountryProviders() : super();
 
   void searchCountry(String name) {
-    debugPrint('Search Country: $name');
     state = name;
   }
 
@@ -24,7 +22,6 @@ class AsyncCountryProviders
     extends AutoDisposeFamilyAsyncNotifier<CountryData, (String, int?)> {
   @override
   FutureOr<CountryData> build((String, int?) arg) async {
-    debugPrint('Places: $arg');
     return await getData(arg.$1, arg.$2);
   }
 
@@ -32,7 +29,6 @@ class AsyncCountryProviders
     final CountryServices countryServices = CountryServices();
     final countryData =
         await countryServices.getData(name: name, offset: offset ?? 0);
-    debugPrint('Country Data: $countryData');
     return countryData;
   }
 }

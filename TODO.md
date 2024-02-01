@@ -4,7 +4,7 @@
 
 ### Progress
 
-- [] Save data from search view to saved_location_page
+- [] Save Data To Shared Preferences
 
 ## Completed
 
@@ -17,3 +17,4 @@
 - [x] Set Riverpod for Country API
 - [x] Make in Country to get Data API
 - [x] Make a Search Location
+- [x] Save data from search view to saved_location_page

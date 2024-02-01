@@ -26,7 +26,7 @@ class WeatherServices {
     }
   }
 
-  Future getDataForecastCity({required String city}) async {
+  Future<Weather> getDataForecastCity({required String city}) async {
     try {
       final response = await dio.get('?key=$API&q=$city&days=3');
       return Weather.fromJson(response.data);

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:weather_app/provider/country_providers.dart';
+import 'package:weather_app/provider/saved_location_provider.dart';
 import 'package:weather_app/view/saved_location_page.dart';
 
 import '../helper/Debouncer.dart';
@@ -41,7 +42,6 @@ class _SearchViewLocationState extends State<SearchViewLocation> {
         ),
         child: Consumer(
           builder: (context, ref, child) {
-            debugPrint('Consumer');
             final search = ref.watch(searchCountryProviders);
             return Column(
               children: [
@@ -114,6 +114,10 @@ class _SearchViewLocationState extends State<SearchViewLocation> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
+                                            ref
+                                                .read(savedLocationProviders
+                                                    .notifier)
+                                                .addData(search);
                                             Navigator.pop(context);
                                           },
                                           child: Padding(
