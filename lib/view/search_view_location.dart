@@ -18,6 +18,8 @@ class SearchViewLocation extends StatefulWidget {
 }
 
 class _SearchViewLocationState extends State<SearchViewLocation> {
+  final GlobalKey alertLoadKey = GlobalKey();
+  final GlobalKey alertSuccessKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     TextEditingController searchController = TextEditingController();
@@ -114,11 +116,55 @@ class _SearchViewLocationState extends State<SearchViewLocation> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return Center(
+                                                  child: AlertDialog(
+                                                    key: alertLoadKey,
+                                                    title: const Text(
+                                                      "Getting Weather Data",
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                    ),
+                                                    content: const Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        CircularProgressIndicator(),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ).then((value) {
+                                              Navigator.of(context).pop();
+                                            });
                                             ref
                                                 .read(savedLocationProviders
                                                     .notifier)
-                                                .addData(search);
-                                            Navigator.pop(context);
+                                                .addData(search)
+                                                .then((value) {})
+                                                .catchError((error) {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return Center(
+                                                    child: AlertDialog(
+                                                      title:
+                                                          const Text("Error"),
+                                                      content:
+                                                          Text("Error $error"),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            }).whenComplete(() =>
+                                                    Navigator.of(context)
+                                                        .pop());
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(

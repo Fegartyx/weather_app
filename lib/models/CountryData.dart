@@ -2,7 +2,6 @@
 //
 //     final countryData = countryDataFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 CountryData countryDataFromJson(String str) =>

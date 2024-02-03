@@ -18,3 +18,4 @@
 - [x] Make in Country to get Data API
 - [x] Make a Search Location
 - [x] Save data from search view to saved_location_page
+- [x] Set Save Data without Duplicate

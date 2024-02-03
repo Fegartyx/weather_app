@@ -1,7 +1,6 @@
 import "package:flutter/cupertino.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:location/location.dart";
-import "package:weather_app/models/CountryData.dart";
 import "package:weather_app/services/WeatherServices.dart";
 
 import "../models/Weather.dart";

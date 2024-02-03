@@ -23,6 +23,18 @@ class Weather {
         "current": current.toJson(),
         "forecast": forecast.toJson(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Weather &&
+          runtimeType == other.runtimeType &&
+          location.name == other.location.name &&
+          location.lat == other.location.lat &&
+          location.long == other.location.long;
+
+  @override
+  int get hashCode => location.hashCode ^ current.hashCode ^ forecast.hashCode;
 }
 
 class Location {

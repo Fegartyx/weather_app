@@ -119,28 +119,28 @@ class _SavedLocationPageState extends ConsumerState<SavedLocationPage> {
                               children: [
                                 Text(
                                   data.location.name,
-                                  style: TextStyle(fontSize: 24),
+                                  style: const TextStyle(fontSize: 24),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 8,
                                 ),
                                 Text(
                                   data.current.condition.text,
-                                  style: TextStyle(fontSize: 16),
+                                  style: const TextStyle(fontSize: 16),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 22,
                                 ),
                                 Text(
                                   "Humidity ${data.current.humidity}%",
-                                  style: TextStyle(fontSize: 16),
+                                  style: const TextStyle(fontSize: 16),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 Text(
                                   "Wind ${data.current.windKph.toInt()} km/h",
-                                  style: TextStyle(fontSize: 16),
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                               ],
                             ),
@@ -165,7 +165,7 @@ class _SavedLocationPageState extends ConsumerState<SavedLocationPage> {
                                 ),
                                 Text(
                                   "${data.current.tempC.toInt()}\u00b0C",
-                                  style: TextStyle(fontSize: 48),
+                                  style: const TextStyle(fontSize: 48),
                                 ),
                               ],
                             ),
@@ -241,50 +241,59 @@ class _SavedLocationPageState extends ConsumerState<SavedLocationPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const Column(
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "New York",
-                                        style: TextStyle(fontSize: 24),
+                                        data[index].location.name,
+                                        style: const TextStyle(fontSize: 24),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 8,
                                       ),
                                       Text(
-                                        "Sunny",
-                                        style: TextStyle(fontSize: 16),
+                                        data[index].current.condition.text,
+                                        style: const TextStyle(fontSize: 16),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 22,
                                       ),
                                       Text(
-                                        "Humidity 52%",
-                                        style: TextStyle(fontSize: 16),
+                                        "Humidity ${data[index].current.humidity}%",
+                                        style: const TextStyle(fontSize: 16),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
-                                        "Wind 15 km/h",
-                                        style: TextStyle(fontSize: 16),
+                                        "Wind ${data[index].current.windKph} km/h",
+                                        style: const TextStyle(fontSize: 16),
                                       ),
                                     ],
                                   ),
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      SvgPicture.asset(
-                                        "assets/sunny_cloud.svg",
+                                      Image.network(
+                                        loadingBuilder:
+                                            (context, child, loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        },
+                                        'https:${data[index].current.condition.icon}',
+                                        height: 50,
                                       ),
                                       const SizedBox(
                                         height: 7,
                                       ),
-                                      const Text(
-                                        "33\u00b0C",
-                                        style: TextStyle(fontSize: 48),
+                                      Text(
+                                        "${data[index].current.tempC.toInt()}\u00b0C",
+                                        style: const TextStyle(fontSize: 48),
                                       ),
                                     ],
                                   ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:weather_app/provider/weather_providers.dart';
 import 'package:weather_app/services/LocationServices.dart';
 import 'package:weather_app/view/saved_location_page.dart';
