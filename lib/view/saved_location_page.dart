@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:weather_app/helper/Debouncer.dart';
 import 'package:weather_app/provider/saved_location_provider.dart';
 import 'package:weather_app/view/home_page.dart';
 import 'package:weather_app/view/search_view_location.dart';
@@ -20,7 +21,6 @@ class _SavedLocationPageState extends ConsumerState<SavedLocationPage> {
   Widget build(BuildContext context) {
     final weather = ref.watch(weatherProvider);
     final location = ref.watch(savedLocationProviders);
-    // final search = ref.watch(searchSavedLocation);
     debugPrint('rebuild saved location page');
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -70,7 +70,7 @@ class _SavedLocationPageState extends ConsumerState<SavedLocationPage> {
               height: 22,
             ),
             const Text(
-              'Lokasi Saat Ini',
+              'Lokasi Favorit',
               style: TextStyle(color: Colors.grey, fontSize: 16),
             ),
             const SizedBox(
@@ -100,12 +100,15 @@ class _SavedLocationPageState extends ConsumerState<SavedLocationPage> {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(25),
                       onTap: () {
-                        Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => const HomePage(),
-                          ),
-                          (route) => false,
-                        );
+                        ref.read(weatherProvider.notifier).replaceWeather(data);
+                        Debouncer(milliseconds: 800).run(() {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(),
+                            ),
+                            (route) => false,
+                          );
+                        });
                       },
                       onLongPress: () {},
                       child: Padding(
@@ -194,7 +197,7 @@ class _SavedLocationPageState extends ConsumerState<SavedLocationPage> {
               height: 12,
             ),
             const Text(
-              'Lokasi Favorit',
+              'Lokasi Lain',
               style: TextStyle(color: Colors.grey, fontSize: 16),
             ),
             location.when(
@@ -226,12 +229,17 @@ class _SavedLocationPageState extends ConsumerState<SavedLocationPage> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(25),
                             onTap: () {
-                              Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                  builder: (context) => const HomePage(),
-                                ),
-                                (route) => false,
-                              );
+                              ref
+                                  .read(weatherProvider.notifier)
+                                  .replaceWeather(data[index]);
+                              Debouncer(milliseconds: 800).run(() {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                    builder: (context) => const HomePage(),
+                                  ),
+                                  (route) => false,
+                                );
+                              });
                             },
                             onLongPress: () {},
                             child: Padding(

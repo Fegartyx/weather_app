@@ -1,10 +1,6 @@
 ## TODO
 
-- [] Check Connectivity
-
 ### Progress
-
-- [] Save Data To Shared Preferences
 
 ## Completed
 
@@ -19,3 +15,4 @@
 - [x] Make a Search Location
 - [x] Save data from search view to saved_location_page
 - [x] Set Save Data without Duplicate
+- [x] Save Data To Shared Preferences

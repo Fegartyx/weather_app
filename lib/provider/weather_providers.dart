@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:flutter/cupertino.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:location/location.dart";
@@ -79,7 +81,7 @@ class AsyncWeatherProvider extends AutoDisposeAsyncNotifier<Weather> {
   AsyncWeatherProvider() : super();
 
   @override
-  Future<Weather> build() async {
+  FutureOr<Weather> build() async {
     final location = ref.watch(locationProvider);
     // Menggunakan await untuk mendapatkan nilai dari location secara synchronous
     final locationData = location.whenOrNull(data: (value) => value);
@@ -93,20 +95,26 @@ class AsyncWeatherProvider extends AutoDisposeAsyncNotifier<Weather> {
       // Handle ketika data location belum tersedia
       throw Exception('Location data is not available');
     }
-    // return await getWeather(
-    //   25.55,
-    //   25.55,
-    // );
   }
 
   Future<Weather> getWeather(double lat, long) async {
     final weather = ref.watch(callData);
-    final data = await weather.getDataForecastLatLong(
+    Weather data;
+    data = await weather.getDataForecastLatLong(
       lat,
       long,
     );
-    debugPrint("Data: $data");
+    state = await AsyncValue.guard(() async {
+      return data;
+    });
     return data;
+  }
+
+  Future replaceWeather(Weather weather) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      return weather;
+    });
   }
 }
 
